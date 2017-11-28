@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="rememberMe"/>
+		<property name="httpOnly" value="true"/>
+		<property name="maxAge" value="2592000"/><!-- 30天-->
+	</bean>
+	
+	<!-- rememberMe管理器-->
+	<bean id="rememberMeManager"
+		class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<property name="cipherKey" value="
+			#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>
+		<property name="cookie" ref="rememberMeCookie"/>
+	</bean>
+
+	<!-- 缓存管理器使用 Ehcache 实现-->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+	</bean>
+	
+	<!-- Session ID 生成器-->
+	<bean id="sessionIdGenerator"
+		class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+	
+	<!-- Session DAO. 继承 EnterpriseCacheSessionDAO -->
+	<bean id="sessionDAO"
+		class="com.atguigu.shiro.realms.MySessionDao">
+		<property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+		<property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+	</bean>
+	
+	<!-- 会话管理器-->
+	<bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
+		<property name="globalSessionTimeout" value="1800000"/>
+		<property name="deleteInvalidSessions" value="true"/>
+		<property name="sessionValidationSchedulerEnabled" value="true"/>
+		<property name="sessionDAO" ref="sessionDAO"/>
+	</bean>
+	
+	<!-- SecurityManager -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="authenticator" ref="authenticator"></property>
+        
+        <property name="realms">
+        	<list>
+    			<ref bean="jdbcRealm"/>
+    			<ref bean="secondRealm"/>
+    		</list>
+        </property>
+        
+        <property name="sessionManager" ref="sessionManager"></property>
+    </bean>
+
+</beans>
