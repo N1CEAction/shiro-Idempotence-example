@@ -26,7 +26,10 @@
 	
 	<br><br>
 	<a href="shiro/testShiroAnnotation">Test ShiroAnnotation</a>
-	
+
+	<br><br>
+	<a href="form.jsp">Form Page</a>
+
 	<br><br>
 	<a href="shiro/logout">Logout</a>
 	
