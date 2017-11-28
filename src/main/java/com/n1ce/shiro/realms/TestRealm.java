@@ -1,4 +1,4 @@
-package com.atguigu.shiro.realms;
+package com.n1ce.shiro.realms;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -9,7 +9,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 public class TestRealm extends AuthorizingRealm {
 
-	//ÓÃÓÚÊÚÈ¨µÄ·½·¨. 
+	//ç”¨äºæˆæƒçš„æ–¹æ³•.
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
@@ -17,7 +17,7 @@ public class TestRealm extends AuthorizingRealm {
 		return null;
 	}
 
-	//ÓÃÓÚÈÏÖ¤µÄ·½·¨
+	//ç”¨äºè®¤è¯çš„æ–¹æ³•
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken token) throws AuthenticationException {

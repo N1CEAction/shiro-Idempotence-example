@@ -1,13 +1,13 @@
-package com.atguigu.shiro.realms;
-
-import java.io.Serializable;
-import java.util.List;
+package com.n1ce.shiro.realms;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class MySessionDao extends EnterpriseCacheSessionDAO {
 

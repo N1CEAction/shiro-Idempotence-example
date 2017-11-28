@@ -28,7 +28,7 @@
 	
 	<!-- Session DAO. 继承 EnterpriseCacheSessionDAO -->
 	<bean id="sessionDAO"
-		class="com.atguigu.shiro.realms.MySessionDao">
+		class="com.n1ce.shiro.realms.MySessionDao">
 		<property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
 		<property name="sessionIdGenerator" ref="sessionIdGenerator"/>
 	</bean>

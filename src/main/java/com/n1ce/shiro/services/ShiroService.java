@@ -1,10 +1,10 @@
-package com.atguigu.shiro.services;
-
-import java.util.Date;
+package com.n1ce.shiro.services;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.session.Session;
+
+import java.util.Date;
 
 public class ShiroService {
 	

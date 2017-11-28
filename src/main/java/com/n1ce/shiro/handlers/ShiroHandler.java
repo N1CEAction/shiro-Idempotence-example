@@ -1,7 +1,6 @@
-package com.atguigu.shiro.handlers;
+package com.n1ce.shiro.handlers;
 
-import javax.servlet.http.HttpSession;
-
+import com.n1ce.shiro.services.ShiroService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.atguigu.shiro.services.ShiroService;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/shiro")
@@ -27,26 +26,35 @@ public class ShiroHandler {
 		return "redirect:/list.jsp";
 	}
 
+
+	@RequestMapping("/testShiroAnnotation")
+	public String testIdempotence(HttpSession session){
+		session.setAttribute("key", "value12345");
+		shiroService.testMethod();
+		return "redirect:/list.jsp";
+	}
+
 	@RequestMapping("/login")
 	public String login(@RequestParam("username") String username, 
 			@RequestParam("password") String password){
 		Subject currentUser = SecurityUtils.getSubject();
-		
+
+		// remembermeååœ¨æœ‰æ•ˆæœŸå†…æ— éœ€è®¤è¯  rememberMeManager.cookie.maxAge
 		if (!currentUser.isAuthenticated()) {
-        	// °ÑÓÃ»§ÃûºÍÃÜÂë·â×°Îª UsernamePasswordToken ¶ÔÏó
+			// æŠŠç”¨æˆ·åå’Œå¯†ç å°è£…ä¸º UsernamePasswordToken å¯¹è±¡
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             // rememberme
             token.setRememberMe(true);
             try {
             	System.out.println("1. " + token.hashCode());
-            	// Ö´ĞĞµÇÂ¼. 
+				// æ‰§è¡Œç™»å½•
                 currentUser.login(token);
-            } 
-            // ... catch more exceptions here (maybe custom ones specific to your application?
-            // ËùÓĞÈÏÖ¤Ê±Òì³£µÄ¸¸Àà. 
+            }
+			// ... catch more exceptions here (maybe custom ones specific to your application?
+			// æ‰€æœ‰è®¤è¯æ—¶å¼‚å¸¸çš„çˆ¶ç±».
             catch (AuthenticationException ae) {
                 //unexpected condition?  error?
-            	System.out.println("µÇÂ¼Ê§°Ü: " + ae.getMessage());
+            	System.out.println("ç™»å½•å¤±è´¥:  " + ae.getMessage());
             }
         }
 		

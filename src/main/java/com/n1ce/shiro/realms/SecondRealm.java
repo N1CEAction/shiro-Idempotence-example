@@ -1,4 +1,4 @@
-package com.atguigu.shiro.realms;
+package com.n1ce.shiro.realms;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -17,43 +17,43 @@ public class SecondRealm extends AuthenticatingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken token) throws AuthenticationException {
 		System.out.println("[SecondReaml] doGetAuthenticationInfo");
-		
-		//1. °Ñ AuthenticationToken ×ª»»Îª UsernamePasswordToken 
+
+		//1. æŠŠ AuthenticationToken è½¬æ¢ä¸º UsernamePasswordToken
 		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-		
-		//2. ´Ó UsernamePasswordToken ÖĞÀ´»ñÈ¡ username
+
+		//2. ä» UsernamePasswordToken ä¸­æ¥è·å– username
 		String username = upToken.getUsername();
-		
-		//3. µ÷ÓÃÊı¾İ¿âµÄ·½·¨, ´ÓÊı¾İ¿âÖĞ²éÑ¯ username ¶ÔÓ¦µÄÓÃ»§¼ÇÂ¼
-		System.out.println("´ÓÊı¾İ¿âÖĞ»ñÈ¡ username: " + username + " Ëù¶ÔÓ¦µÄÓÃ»§ĞÅÏ¢.");
-		
-		//4. ÈôÓÃ»§²»´æÔÚ, Ôò¿ÉÒÔÅ×³ö UnknownAccountException Òì³£
+
+		//3. è°ƒç”¨æ•°æ®åº“çš„æ–¹æ³•, ä»æ•°æ®åº“ä¸­æŸ¥è¯¢ username å¯¹åº”çš„ç”¨æˆ·è®°å½•
+		System.out.println("ä»æ•°æ®åº“ä¸­è·å– username: " + username + " æ‰€å¯¹åº”çš„ç”¨æˆ·ä¿¡æ¯.");
+
+		//4. è‹¥ç”¨æˆ·ä¸å­˜åœ¨, åˆ™å¯ä»¥æŠ›å‡º UnknownAccountException å¼‚å¸¸
 		if("unknown".equals(username)){
-			throw new UnknownAccountException("ÓÃ»§²»´æÔÚ!");
+			throw new UnknownAccountException("ç”¨æˆ·ä¸å­˜åœ¨!");
 		}
-		
-		//5. ¸ù¾İÓÃ»§ĞÅÏ¢µÄÇé¿ö, ¾ö¶¨ÊÇ·ñĞèÒªÅ×³öÆäËûµÄ AuthenticationException Òì³£. 
+
+		//5. æ ¹æ®ç”¨æˆ·ä¿¡æ¯çš„æƒ…å†µ, å†³å®šæ˜¯å¦éœ€è¦æŠ›å‡ºå…¶ä»–çš„ AuthenticationException å¼‚å¸¸.
 		if("monster".equals(username)){
-			throw new LockedAccountException("ÓÃ»§±»Ëø¶¨");
+			throw new LockedAccountException("ç”¨æˆ·è¢«é”å®š");
 		}
-		
-		//6. ¸ù¾İÓÃ»§µÄÇé¿ö, À´¹¹½¨ AuthenticationInfo ¶ÔÏó²¢·µ»Ø. Í¨³£Ê¹ÓÃµÄÊµÏÖÀàÎª: SimpleAuthenticationInfo
-		//ÒÔÏÂĞÅÏ¢ÊÇ´ÓÊı¾İ¿âÖĞ»ñÈ¡µÄ.
-		//1). principal: ÈÏÖ¤µÄÊµÌåĞÅÏ¢. ¿ÉÒÔÊÇ username, Ò²¿ÉÒÔÊÇÊı¾İ±í¶ÔÓ¦µÄÓÃ»§µÄÊµÌåÀà¶ÔÏó. 
+
+		//6. æ ¹æ®ç”¨æˆ·çš„æƒ…å†µ, æ¥æ„å»º AuthenticationInfo å¯¹è±¡å¹¶è¿”å›. é€šå¸¸ä½¿ç”¨çš„å®ç°ç±»ä¸º: SimpleAuthenticationInfo
+		//ä»¥ä¸‹ä¿¡æ¯æ˜¯ä»æ•°æ®åº“ä¸­è·å–çš„.
+		//1). principal: è®¤è¯çš„å®ä½“ä¿¡æ¯. å¯ä»¥æ˜¯ username, ä¹Ÿå¯ä»¥æ˜¯æ•°æ®è¡¨å¯¹åº”çš„ç”¨æˆ·çš„å®ä½“ç±»å¯¹è±¡.
 		Object principal = username;
-		//2). credentials: ÃÜÂë. 
+		//2). credentials: å¯†ç .
 		Object credentials = null; //"fc1709d0a95a6be30bc5926fdb7f22f4";
 		if("admin".equals(username)){
 			credentials = "ce2f6417c7e1d32c1d81a797ee0b499f87c5de06";
 		}else if("user".equals(username)){
 			credentials = "073d4c3ae812935f23cb3f2a71943f49e082a718";
 		}
-		
-		//3). realmName: µ±Ç° realm ¶ÔÏóµÄ name. µ÷ÓÃ¸¸ÀàµÄ getName() ·½·¨¼´¿É
+
+		//3). realmName: å½“å‰ realm å¯¹è±¡çš„ name. è°ƒç”¨çˆ¶ç±»çš„ getName() æ–¹æ³•å³å¯
 		String realmName = getName();
-		//4). ÑÎÖµ. 
+		//4). ç›å€¼.
 		ByteSource credentialsSalt = ByteSource.Util.bytes(username);
-		
+
 		SimpleAuthenticationInfo info = null; //new SimpleAuthenticationInfo(principal, credentials, realmName);
 		info = new SimpleAuthenticationInfo("secondRealmName", credentials, credentialsSalt, realmName);
 		return info;
@@ -64,7 +64,7 @@ public class SecondRealm extends AuthenticatingRealm {
 		Object credentials = "123456";
 		Object salt = ByteSource.Util.bytes("admin");;
 		int hashIterations = 1024;
-		
+
 		Object result = new SimpleHash(hashAlgorithmName, credentials, salt, hashIterations);
 		System.out.println(result);
 	}
